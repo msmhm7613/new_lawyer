@@ -55,6 +55,14 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('/speciality/update','SpecialityController@edit');
     // Destroy Speciality (id)
     Route::get('/speciality/destroy','SpecialityController@destroy');
+
+    // Blog Route
+    // remove blog(blog_id)
+    Route::get('/blog/remove/{blog_id}','BlogController@detroy');
+    // change blog status(blog_id,status)
+    Route::get('/blog/change_status/{blog_id}/{status}','BlogController@changeStatus');
+    // remove blog (blog_id)
+    Route::get('/blog/destroy/{blog_id}','BlogController@destroy');
 });
 
 /* Lawyer Uri */
@@ -63,6 +71,11 @@ Route::group(['prefix' => 'lawyer'], function () {
     Route::post('/confirmation/create','ConfirmationController@create');
 
     Route::post('/answer/store','AnswerController@store');
+
+    // create Blog(title,slug,body,image*)
+    Route::post('/blog/create','BlogController@create');
+    // update Blog(title,slug,body,image*)
+    Route::post('/blog/update','BlogController@update');
 
 });
 

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\User;
 use Illuminate\Http\Request;
 
-class LawyerInfoController extends Controller
+class LawyerInfoController extends FileController
 {
 
 }

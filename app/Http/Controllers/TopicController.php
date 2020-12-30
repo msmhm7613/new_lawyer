@@ -6,12 +6,8 @@ use App\Topic;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class TopicController extends Controller
+class TopicController extends FileController
 {
-    public $success_msg = 'عملیات با موفقیت انجام شد';
-    public $fails_msg = 'خطا : عملیات با شکست مواجه شد';
-    public $empty_result = 'هیچ داده ای پیدا نشد';
-
     public function store(Request $req)
     {
 

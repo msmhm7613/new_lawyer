@@ -6,12 +6,8 @@ use App\Speciality;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class SpecialityController extends Controller
+class SpecialityController extends FileController
 {
-    public $success_msg = 'عملیات با موفقیت انجام شد';
-    public $fails_msg = 'خطا : عملیات با شکست مواجه شد';
-    public $empty_result = 'هیچ داده ای پیدا نشد';
-
     public function store(Request $req){
 
         $validate = Validator::make($req->all(), [
