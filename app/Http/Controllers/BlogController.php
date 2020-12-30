@@ -125,4 +125,33 @@ class BlogController extends FileController
         }
     }
 
+    public function show($blog_id){
+
+        $blog = Blog::findOrFail($blog_id);
+
+        return response()->json(['status' => 1,'result' => $blog]);
+
+    }
+
+    public function all($user_id){
+
+        $blogs = Blog::where('user_id',$user_id)->latest()->get();
+
+        if(count($blogs))
+            return response()->json(['status' => 1,'result' => $blogs]);
+        else
+            return response()->json(['status' => 0,'msg' => $this->empty_result]);
+
+    }
+
+    public function allBlog($status){
+
+        $blogs = Blog::where('status',$status)->latest()->get();
+
+        if(count($blogs))
+            return response()->json(['status' => 1,'result' => $blogs]);
+        else
+            return response()->json(['status' => 0,'msg' => $this->empty_result]);
+    }
+
 }

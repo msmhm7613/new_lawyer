@@ -63,6 +63,9 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/blog/change_status/{blog_id}/{status}','BlogController@changeStatus');
     // remove blog (blog_id)
     Route::get('/blog/destroy/{blog_id}','BlogController@destroy');
+    // Filter All Blog(status)
+    Route::get('/blog/all_blog/{status}','BlogController@allBlog');
+
 });
 
 /* Lawyer Uri */
@@ -104,6 +107,11 @@ Route::get('/topic/all','TopicController@topics');
 
 // Tags Uri
 Route::get('/tags/all','TagController@tags');
+
+// Blog Uri(blog_id)
+Route::get('/blog/show/{blog_id}','BlogController@show');
+// Lawyer Blogs(user_id)
+Route::get('/blog/all/{user_id}','BlogController@all');
 
 // Kiri Route
 Route::get('/update_slug_lawyers','TestController@updateSlug');
