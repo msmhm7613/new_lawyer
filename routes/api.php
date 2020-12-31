@@ -88,7 +88,10 @@ Route::get('/lawyers','LawyerController@getLawyer');
 
 // Filter Lawyers (*city,*role_id)
 Route::get('/lawyers/filter/{city?}/{role_id?}','LawyerController@filterLawyers');
+// Complete Filter Lawyer(role_id*,city*,speciality*,service_types*,gender*)
+Route::post('/lawyers/filter','LawyerController@lawyerFilter');
 
+// question route
 Route::post('/question/store','QuestionController@store');
 Route::get('/question/get/{start?}','QuestionController@getQuestions');
 Route::get('/question/{id}','QuestionController@show');
