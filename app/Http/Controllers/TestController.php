@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Blog;
 use App\LawyerInfo;
 use App\User;
 use Illuminate\Http\Request;
@@ -29,5 +30,14 @@ class TestController extends Controller
             $item->save();
         }
 
+    }
+
+    public function setTagsBlog(){
+        $arr = array('#تهمت','#دزدی','#ریا','#دروغ');
+        $tags = json_encode($arr);
+        foreach (Blog::all() as $blog){
+            $blog->tags = $tags;
+            $blog->save();
+        }
     }
 }

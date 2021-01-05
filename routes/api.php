@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 /*Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });*/
-
+// register (name,cellphone,city,region,password)
 Route::post('register','UserController@register');
 
 /* Admin Uri */
@@ -115,7 +115,16 @@ Route::get('/tags/all','TagController@tags');
 Route::get('/blog/show/{blog_id}','BlogController@show');
 // Lawyer Blogs(user_id)
 Route::get('/blog/all/{user_id}','BlogController@all');
+// Return Blog with (exp_tag) without #
+Route::get('/blog/tags/{tag}','BlogController@tagBlogs');
+// Return Top View Blogs
+Route::get('/blog/top_view','BlogController@topView');
+// Return User Max Blog
+// get All Route
+Route::get('/role/all','RoleController@all');
+
 
 // Kiri Route
 Route::get('/update_slug_lawyers','TestController@updateSlug');
 Route::get('/set_speciality','TestController@setSpeciality');
+Route::get('/set_tags_blog','TestController@setTagsBlog');

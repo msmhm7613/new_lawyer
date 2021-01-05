@@ -19,7 +19,8 @@ class BlogController extends FileController
             'title' => 'required',
             'slug' => 'required|unique:blogs',
             'image' => 'nullable|mimes:jpg,png,jpeg',
-            'body' => 'required|string'
+            'body' => 'required|string',
+            'tags' => 'required'
         ]);
 
         if ($validate->fails())
@@ -36,12 +37,20 @@ class BlogController extends FileController
             } else
                 $req['image'] = 'default.png';
 
+            $c = count($req['tags']);
+
+            for ($i = 0; $i < $c; $i++) {
+                $tags[] = $req['tags'][$i];
+            }
+
+            $req['tags'] = json_encode($tags);
             $req['user_id'] = Auth::id();
 
             Blog::create($req->except('_token'));
 
             return response()->json(['status' => 1, 'msg' => $this->success_msg]);
         } catch (\Exception $exp) {
+            return response()->json(['status' => 0, 'msg' => $exp->getMessage()]);
             return response()->json(['status' => 0, 'msg' => $this->fails_msg]);
         }
 
@@ -55,7 +64,8 @@ class BlogController extends FileController
             'slug' => 'required',
             'image' => 'nullable|mimes:jpg,png,jpeg',
             'body' => 'required|string',
-            'blog_id' => 'required'
+            'blog_id' => 'required',
+            'tags' => 'required'
         ]);
 
         if ($validate->fails())
@@ -78,11 +88,21 @@ class BlogController extends FileController
             } else
                 $req->image = 'default.png';
 
+
+            $c = count($req['tags']);
+
+            for ($i = 0; $i < $c; $i++) {
+                $tags[] = $req['tags'][$i];
+            }
+
+            $req['tags'] = json_encode($tags);
+
             Blog::where('id', $req->blog_id)->update([
                 'title' => $req->title,
                 'slug' => $req->slug,
                 'body' => $req->body,
                 'image' => $req->image,
+                'tags' => $req->tags
             ]);
 
             return response()->json(['status' => 1, 'msg' => $this->success_msg]);
@@ -107,7 +127,8 @@ class BlogController extends FileController
 
     }
 
-    public function destroy($blog_id){
+    public function destroy($blog_id)
+    {
 
         try {
 
@@ -125,33 +146,68 @@ class BlogController extends FileController
         }
     }
 
-    public function show($blog_id){
+    public function show($blog_id)
+    {
 
         $blog = Blog::findOrFail($blog_id);
+        $blog->view_count++;
+        $blog->save();
 
-        return response()->json(['status' => 1,'result' => $blog]);
+        $tags = json_decode($blog->tags);
+        $i = count($tags) - 1;
+        $j = rand(0,$i);
+        $other_blogs = Blog::whereJsonContains('tags', ["$tags[$j]"])->take(10)->get();
+        $blog->other_blog = $other_blogs;
+
+        return response()->json(['status' => 1, 'result' => $blog]);
 
     }
 
-    public function all($user_id){
+    public function all($user_id)
+    {
 
-        $blogs = Blog::where('user_id',$user_id)->latest()->get();
+        $blogs = Blog::where('user_id', $user_id)->latest()->get();
 
+        if (count($blogs))
+            return response()->json(['status' => 1, 'result' => $blogs]);
+        else
+            return response()->json(['status' => 0, 'msg' => $this->empty_result]);
+
+    }
+
+    public function allBlog($status)
+    {
+
+        $blogs = Blog::where('status', $status)->latest()->get();
+
+        if (count($blogs))
+            return response()->json(['status' => 1, 'result' => $blogs]);
+        else
+            return response()->json(['status' => 0, 'msg' => $this->empty_result]);
+    }
+
+    public function tagBlogs($tag)
+    {
+
+        $new_tag = "#$tag";
+        $blogs = Blog::whereJsonContains('tags', ["$new_tag"])->get();
+
+        if (count($blogs))
+            return response()->json(['status' => 1, 'result' => $blogs]);
+        else
+            return response()->json(['status' => 0, 'msg' => $this->empty_result]);
+
+    }
+
+    public function topView()
+    {
+
+        $blogs = Blog::orderBy('view_count','DESC')->take(6)->get();
         if(count($blogs))
             return response()->json(['status' => 1,'result' => $blogs]);
         else
             return response()->json(['status' => 0,'msg' => $this->empty_result]);
 
-    }
-
-    public function allBlog($status){
-
-        $blogs = Blog::where('status',$status)->latest()->get();
-
-        if(count($blogs))
-            return response()->json(['status' => 1,'result' => $blogs]);
-        else
-            return response()->json(['status' => 0,'msg' => $this->empty_result]);
     }
 
 }
