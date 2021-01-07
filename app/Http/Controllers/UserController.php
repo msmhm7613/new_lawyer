@@ -97,4 +97,13 @@ class UserController extends FileController
 
     }
 
+    public function checkExist($mobile){
+
+        if(is_null(User::where('cellphone',$mobile)->first()))
+            return response()->json(['status' => 0,'msg' => $this->empty_result]);
+        else
+            return response()->json(['status' => 1,'msg' => 'شماره مورد نظر قبلا در سیستم ثبت شده است']);
+
+    }
+
 }

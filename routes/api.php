@@ -22,6 +22,8 @@ use Illuminate\Support\Facades\Route;
 Route::post('register','UserController@register');
 // Active User (code&mobile)
 Route::get('check_code/{code}/{mobile}','UserController@checkCode');
+// check exist user
+Route::get('exist_user/{mobile}','UserController@checkExist');
 /* Admin Uri */
 Route::group(['prefix' => 'admin'], function () {
 
