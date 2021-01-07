@@ -50,7 +50,7 @@ class LawyerController extends Controller
     public function show($slug)
     {
 
-        $user = User::where('slug', $slug)->where('status', 2)->select('id', 'name', 'email', 'city', 'slug', 'region', 'profile')->first();
+        $user = User::where('slug', $slug)->where('status', 2)->select('id', 'name', 'city', 'slug', 'region', 'profile')->first();
 
         if (is_null($user))
             return response()->json(['status' => 0, 'msg' => $this->empty_result]);
