@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UserReq;
+use App\SmsCode;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -43,7 +45,8 @@ class UserController extends FileController
 
             $sms_obj = new smsCodeController();
             $send = $sms_obj->sendCode($req->cellphone);
-            // Auth::loginUsingId($user->id);
+
+            Auth::loginUsingId($user->id);
             if($send == 1)
                 return response()->json(['status' => 1,'msg' => 'کد تائید شماره همراه ارسال شد']);
             else
@@ -70,6 +73,28 @@ class UserController extends FileController
             return response()->json(['status' => 0,'msg' => $this->fails_msg]);
 
         }
+    }
+
+    public function checkCode($code,$mobile){
+
+        $check = SmsCode::where('mobile',$mobile)->where('code',$code)->where('expire_at','>',Carbon::now())->where('status',0)->first();
+        if(is_null($check))
+            return response()->json(['status' => 0,'msg' => 'کد احراز هویت پیدا نشد']);
+
+        try{
+
+            $user = User::where('cellphone',$mobile)->first();
+            $user->status = 1;
+            $user->save();
+            $check->status = 1;
+            $check->save();
+
+            return response()->json(['status' => 1,'msg' => 'حساب شما با موفقیت فعال شد']);
+
+        } catch (\Exception $exp){
+            return response()->json(['status' => 0,'msg' => $this->fails_msg]);
+        }
+
     }
 
 }

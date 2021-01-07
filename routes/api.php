@@ -17,9 +17,11 @@ use Illuminate\Support\Facades\Route;
 /*Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });*/
+
 // register (name,cellphone,city,region,password)
 Route::post('register','UserController@register');
-
+// Active User (code&mobile)
+Route::get('check_code/{code}/{mobile}','UserController@checkCode');
 /* Admin Uri */
 Route::group(['prefix' => 'admin'], function () {
 
