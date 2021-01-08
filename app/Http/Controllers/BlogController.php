@@ -146,10 +146,10 @@ class BlogController extends FileController
         }
     }
 
-    public function show($blog_id)
+    public function show($slug)
     {
 
-        $blog = Blog::findOrFail($blog_id);
+        $blog = Blog::where('slug',$slug)->first();
         $blog->view_count++;
         $blog->save();
 
@@ -208,6 +208,15 @@ class BlogController extends FileController
         else
             return response()->json(['status' => 0,'msg' => $this->empty_result]);
 
+    }
+
+    public function latestBlog(){
+
+        $blogs = Blog::latest()->take(10)->get();
+        if(count($blogs))
+            return response()->json(['status' => 1,'result' => $blogs]);
+        else
+            return response()->json(['status' => 0,'msg' => $this->empty_result]);
     }
 
 }

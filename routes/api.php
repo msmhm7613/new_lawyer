@@ -115,8 +115,8 @@ Route::get('/topic/all','TopicController@topics');
 // Tags Uri
 Route::get('/tags/all','TagController@tags');
 
-// Blog Uri(blog_id)
-Route::get('/blog/show/{blog_id}','BlogController@show');
+// Blog Uri(slug)
+Route::get('/blog/show/{slug}','BlogController@show');
 // Lawyer Blogs(user_id)
 Route::get('/blog/all/{user_id}','BlogController@all');
 // Return Blog with (exp_tag) without #
@@ -124,9 +124,14 @@ Route::get('/blog/tags/{tag}','BlogController@tagBlogs');
 // Return Top View Blogs
 Route::get('/blog/top_view','BlogController@topView');
 // Return User Max Blog
+
+// Return 10 Latest Blog
+Route::get('/blog/latest','BlogController@latestBlog');
 // get All Route
 Route::get('/role/all','RoleController@all');
 
+// Update Offline Or Online(user_id,status)
+Route::post('/is_online','UserController@updatePresence');
 
 // Kiri Route
 Route::get('/update_slug_lawyers','TestController@updateSlug');

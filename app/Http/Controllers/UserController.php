@@ -106,4 +106,15 @@ class UserController extends FileController
 
     }
 
+    public function updatePresence(Request $req){
+
+        $user = User::FindOrFail($req->user_id);
+        $user->is_onilne = $req->status;
+        if($user->save())
+            return response()->json(['status' => 1,'msg' => $this->success_msg]);
+        else
+            return response()->json(['status' => 0,'msg' => $this->fails_msg]);
+
+    }
+
 }

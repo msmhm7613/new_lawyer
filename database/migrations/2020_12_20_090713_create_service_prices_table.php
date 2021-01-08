@@ -17,7 +17,8 @@ class CreateServicePricesTable extends Migration
             $table->id();
             $table->unsignedBigInteger('role_id');
             $table->foreign('role_id')->references('id')->on('roles');
-            $table->string('service_type')->comment('1 Online 2 Phone');
+            $table->unsignedBigInteger('service_type')->comment('FK ServiceTypes');
+            $table->foreign('service_type')->references('id')->on('service_types')->onDelete('cascade');
             $table->string('price');
             $table->timestamps();
         });

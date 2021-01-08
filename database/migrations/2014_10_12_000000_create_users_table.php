@@ -27,6 +27,7 @@ class CreateUsersTable extends Migration
             $table->string('role',1)->comment('1 User 2 Lawyer 3 Admin');
             $table->string('profile');
             $table->string('status',1)->comment('1 Register 2 Active 3 Inactive');
+            $table->string('is_online',1)->comment('0 offline 1 online');
             $table->rememberToken();
             $table->timestamps();
         });

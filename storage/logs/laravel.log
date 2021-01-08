@@ -4334,3 +4334,36 @@ ew_lawyer\\public\\index.php(55): Illuminate\\Foundation\\Http\\Kernel->handle(O
 ew_lawyer\\server.php(21): require_once('C:\\\\Users\\\\Hadi\\\\D...')
 #46 {main}
 "} 
+[2021-01-08 14:24:17] local.ERROR: Command "migarte" is not defined.
+
+Did you mean one of these?
+    migrate
+    migrate:fresh
+    migrate:install
+    migrate:refresh
+    migrate:reset
+    migrate:rollback
+    migrate:status {"exception":"[object] (Symfony\\Component\\Console\\Exception\\CommandNotFoundException(code: 0): Command \"migarte\" is not defined.
+
+Did you mean one of these?
+    migrate
+    migrate:fresh
+    migrate:install
+    migrate:refresh
+    migrate:reset
+    migrate:rollback
+    migrate:status at C:\\Users\\Hadi\\Desktop\
+ew_lawyer\\vendor\\symfony\\console\\Application.php:675)
+[stacktrace]
+#0 C:\\Users\\Hadi\\Desktop\
+ew_lawyer\\vendor\\symfony\\console\\Application.php(254): Symfony\\Component\\Console\\Application->find('migarte')
+#1 C:\\Users\\Hadi\\Desktop\
+ew_lawyer\\vendor\\symfony\\console\\Application.php(166): Symfony\\Component\\Console\\Application->doRun(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#2 C:\\Users\\Hadi\\Desktop\
+ew_lawyer\\vendor\\laravel\\framework\\src\\Illuminate\\Console\\Application.php(93): Symfony\\Component\\Console\\Application->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#3 C:\\Users\\Hadi\\Desktop\
+ew_lawyer\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(129): Illuminate\\Console\\Application->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#4 C:\\Users\\Hadi\\Desktop\
+ew_lawyer\\artisan(37): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#5 {main}
+"} 
